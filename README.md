@@ -7,4 +7,4 @@ This is a text based resource managenment game. The player will be in charge of 
 The player will be in charge of hiring,firing and scheduling employees, setting prices for items and ordering products.
 The goal of the game is to maintain a profit and keep their restaruant open. 
 
-[License](../blob/master/LICENSE)
+[License](LICENSE)
