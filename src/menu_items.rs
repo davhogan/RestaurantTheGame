@@ -1,4 +1,4 @@
-mod menuItems{
+mod menu_items{
     use std::borrow::Borrow;
 
     pub struct MenuItem {
@@ -14,7 +14,7 @@ mod menuItems{
 
         //Getters
         pub fn get_name(&self) -> String {
-            self.name.borrow().to_owned();
+            self.name.borrow().to_owned()
         }
 
         pub fn get_price(&self) -> f64 {
