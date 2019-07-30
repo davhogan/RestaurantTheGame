@@ -14,7 +14,7 @@ mod menu_items{
 
         //Getters
         pub fn get_name(&self) -> String {
-            self.name.borrow().to_owned()
+            self.name.to_owned()
         }
 
         pub fn get_price(&self) -> f64 {
