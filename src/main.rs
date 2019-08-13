@@ -1,20 +1,29 @@
-mod employee;
-mod menu_items;
-mod names;
-
-pub use names::*;
-pub use employee::*;
-pub use menu_items::*;
-
-use names::{Generator, Name};
+#[macro_use]
+extern crate rand;
+#[macro_use]
+extern crate text_io;
+mod ui;
+use ui::UI;
+//mod simulator;
+//use simulator::Simulator;
 
 fn main() {
-    let mut generator = Generator::with_naming(Name::Plain);
 
-    for i in 0..3 {
-        println!("Name is: {}", generator.next().unwrap());
+    let mut choice : String = " ".to_owned();
+    
+    println!("Welcome to Restaurant The Game");
+    println!("This is a text based restaurant simulation game");
+    println!("You will be in charge of managing a restaurant.");
+    println!("This includes hiring and firing employees, ordering more inventory,");
+    println!("and changing the price and quality of the food on the menu.");
+    println!("Press q to quit or enter to launch game");
+    
+    choice = read!();
+    if choice == "q".to_owned() {
+        return ;
     }
 
-
+    let mut ui = UI::new();
+    ui.home_page();
 
 }
