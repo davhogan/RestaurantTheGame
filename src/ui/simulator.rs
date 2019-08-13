@@ -1,3 +1,8 @@
+// Copyright © 2019 David Hogan
+// [This program is licensed under the "MIT License"]
+// Please see the file COPYING in the source
+// distribution of this software for license terms.
+
 use rand::Rng;
 mod restaurant;
 use restaurant::Restaurant;
@@ -33,8 +38,8 @@ impl Simulator {
 
         println!("Customers servered : {}", cust_served);
         println!("Burgers Sold: {}", burg_inv - self.restaurant.get_inv("Burger".to_owned()));
-        println!("Orders of Fries Sold: {}", burg_inv - self.restaurant.get_inv("Fries".to_owned()));
-        println!("Sodas Sold: {}", burg_inv - self.restaurant.get_inv("Soda".to_owned()));
+        println!("Orders of Fries Sold: {}", fries_inv - self.restaurant.get_inv("Fries".to_owned()));
+        println!("Sodas Sold: {}", soda_inv - self.restaurant.get_inv("Soda".to_owned()));
         println!("Daily profit: ${}", self.restaurant.get_revenue() - revenue);
     }
    

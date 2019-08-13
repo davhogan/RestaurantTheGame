@@ -1,3 +1,6 @@
+//This code is a modified version of the code written by fnichol
+//Found here: https://github.com/fnichol/names/blob/master/src/lib.rs
+
 //! The name `Generator` implements the `Iterator` trait so it can be used with
 //! adapters, consumers, and in loops.
 //!

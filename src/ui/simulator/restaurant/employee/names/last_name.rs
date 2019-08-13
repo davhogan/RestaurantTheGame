@@ -1,5 +1,6 @@
 //Last Names
-//List of last names was found on
+//Modified list from : https://github.com/fnichol/names/blob/master/data/adjectives.txt
+//List of last names was found on : https://names.mongabay.com/most_common_surnames.htm
 pub const LIST: &'static [&'static str] = &[
     "Smith",
     "Johnson",

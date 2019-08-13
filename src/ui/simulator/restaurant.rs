@@ -1,3 +1,8 @@
+// Copyright © 2019 David Hogan
+// [This program is licensed under the "MIT License"]
+// Please see the file COPYING in the source
+// distribution of this software for license terms.
+
 mod employee;
 use employee::Employee;
 mod menu_item;
@@ -376,6 +381,8 @@ impl Restaurant {
     //Displays
     pub fn display_hired(&self) {
         let mut i = 1;
+        println!("The Rating of your Employee will affect how many customers you can serve");
+        println!("The higher your total employees rating the more customers you can serve");
         println!("\tName\tID\tWage\tPostition\tRating");
         for empl in &self.hired_empls {
             println!(
@@ -393,13 +400,12 @@ impl Restaurant {
 
     pub fn display_pot(&self) {
         let mut i = 1;
-        println!("\tName\tID\tWage\tPostition\tRating");
+        println!("\tName\tWage\tPostition\tRating");
         for empl in &self.pot_empls {
             println!(
-                "[{}]\t{}\t{}\t{}\t{}\t\t{}",
+                "[{}]\t{}\t{}\t{}\t\t{}",
                 i,
                 empl.clone().get_name(),
-                empl.get_id(),
                 empl.get_wage(),
                 empl.get_posit_string(),
                 empl.get_rating()
@@ -410,6 +416,7 @@ impl Restaurant {
 
     pub fn display_menu(&self) {
         let mut i = 1;
+        println!("You'll attract more customers the higher the overall quality of your menu is.");
         println!("\tItem\tPrice\tQuality");
         for item in &self.menu {
             println!(

@@ -1,13 +1,15 @@
+// Copyright © 2019 David Hogan
+// [This program is licensed under the "MIT License"]
+// Please see the file COPYING in the source
+// distribution of this software for license terms.
+
 mod simulator;
 use simulator::Simulator;
 
 //Used to interact with the user.
-//
-//
 pub struct UI {
     sim: Simulator,
 }
-
 
 impl UI {
     pub fn new() -> UI {
@@ -42,9 +44,8 @@ impl UI {
             7 => UI::sim_day(self),
             _ => println!("Error"),
         }
-
-
     }
+
     //Display functions
     pub fn display_menu(&mut self) {
         self.sim.display_menu();
@@ -65,11 +66,15 @@ impl UI {
     pub fn hire_emp(&mut self) {
         
         let mut emp_select : i64 = -1;
-        //Display potential employees and choose an employee to hire
+        //Display potential employees and let user choose an employee to hire
         while emp_select < 1 || emp_select > self.sim.pot_len() {
-           self.sim.display_pot(); 
-           println!("Choose employee to hire : ");
-           emp_select = read!();
+           self.sim.display_pot();
+            println!("Enter 0 to return to home page");
+            println!("Choose employee to hire : ");
+            emp_select = read!();
+            if emp_select == 0 {
+                UI::home_page(self);
+            }
         }
         //higher selected employee
         self.sim.hire_empl((emp_select - 1) as usize);
@@ -80,11 +85,15 @@ impl UI {
     //Used to remove an employee from the hired list
     pub fn fire_emp(&mut self) {
         let mut emp_select : i64 = -1;
-        //Display hired employees and choose one to fire
+        //Display hired employees and let user choose one to fire
         while emp_select < 1 || emp_select > self.sim.hired_len() {
-           self.sim.display_hired(); 
+           self.sim.display_hired();
+            println!("Enter 0 to return to home page");
            println!("Choose employee to fire : ");
-           emp_select = read!();
+            emp_select = read!();
+            if emp_select == 0 {
+                UI::home_page( self);
+            }
         }
         //Remove selected employee from the hired list
         self.sim.fire_empl((emp_select - 1) as usize);
@@ -179,7 +188,6 @@ impl UI {
             if (item == 3) {
                 name = "Soda".to_owned();
             }
-
 
             println!("Enter the new price of {}:",name);
             let new_price = read!();
