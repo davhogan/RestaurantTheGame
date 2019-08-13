@@ -45,7 +45,7 @@ impl Customer {
             likes_soda,
         }
     }
-
+    //Getters
     pub fn get_cash(&self) -> f64 {
         self.cash
     }
@@ -58,6 +58,8 @@ impl Customer {
         self.likes_soda
     }
 
+    //Reduce the amount of cash a customer has by a given amount
+    //Amount will be the price of a menu item that is ordered
     pub fn reduce_cash(&mut self, amount: f64) {
         self.cash -= amount;
     }
@@ -72,8 +74,6 @@ pub struct Restaurant {
     hired_empls: Vec<Employee>,
     pot_empls: Vec<Employee>,
     customers: Vec<Customer>,
-    empl_cost: f64,
-    goods_cost: f64,
 }
 
 impl Restaurant {
@@ -82,8 +82,6 @@ impl Restaurant {
         let mut hired_empls: Vec<Employee> = Vec::new();
         let mut pot_empls: Vec<Employee> = Vec::new();
         let mut customers: Vec<Customer> = Vec::new();
-        let mut empl_cost = 0.0;
-        let mut goods_cost = 0.0;
         let revenue = 1000.00;
         let mut id = 0;
 
@@ -102,9 +100,6 @@ impl Restaurant {
             pot_empls.push(Employee::rand_empl());
         }
 
-        for empl in &hired_empls {
-            empl_cost += empl.get_wage() * 8.0;
-        }
 
         Restaurant {
             name,
@@ -114,8 +109,6 @@ impl Restaurant {
             hired_empls,
             pot_empls,
             customers,
-            empl_cost,
-            goods_cost,
         }
     }
 
@@ -126,14 +119,6 @@ impl Restaurant {
 
     pub fn get_revenue(&self) -> f64 {
         self.revenue
-    }
-
-    pub fn get_empl_cost(&self) -> f64 {
-        self.empl_cost
-    }
-
-    pub fn get_goods_cost(&self) -> f64 {
-        self.goods_cost
     }
 
     pub fn get_menu(self) -> Vec<MenuItem> {
@@ -160,11 +145,44 @@ impl Restaurant {
         self.pot_empls[position].clone()
     }
 
-    //Setters
-    pub fn set_goods_cost(&mut self, new_cost: f64) {
-        self.goods_cost = new_cost;
+    //Getters for a given MenuItem
+    //Item selected based on given name
+    pub fn get_price(self, name: String) -> f64 {
+        let mut price: f64 = 0.0;
+
+        for item in self.menu {
+            if name == item.get_name() {
+                price = item.get_price()
+            }
+        }
+
+        price
     }
 
+    pub fn get_item_quality(&mut self, name: String) -> i64 {
+        let mut quality: i64 = 0;
+
+        for item in &mut self.menu {
+            if name == item.get_name() {
+                quality = item.get_quality();
+            }
+        }
+        quality
+    }
+
+    pub fn get_inv(&mut self, name: String) -> i64 {
+        let mut inv: i64 = 0;
+
+        for item in &mut self.menu {
+            if name == item.get_name() {
+                inv = item.get_inv();
+            }
+        }
+        inv
+    }
+
+
+    //Setters
     pub fn set_revenue(&mut self, new_rev: f64) {
         self.revenue = new_rev;
     }
@@ -173,6 +191,8 @@ impl Restaurant {
         self.customers = new_customers;
     }
 
+    //Setters for a given MenuItem
+    //Item selected based on given name
     pub fn set_item_quality(&mut self, name: String, new_quality: i64) {
         for mut item in &mut self.menu {
             if name == item.get_name() {
@@ -190,6 +210,15 @@ impl Restaurant {
             }
         }
     }
+
+    pub fn set_inv_quality(&mut self, name: String, new_qual: i64) {
+        for mut item in &mut self.menu {
+            if name == item.get_name() {
+                item.set_quality(new_qual);
+            }
+        }
+    }
+
     //Hire
     pub fn hire_emp(&mut self, mut new_emp: Employee) {
         self.pot_empls.retain(|x| x.get_id() != new_emp.get_id());
@@ -232,47 +261,6 @@ impl Restaurant {
         }
     }
 
-    pub fn get_price(self, name: String) -> f64 {
-        let mut price: f64 = 0.0;
-
-        for item in self.menu {
-            if name == item.get_name() {
-                price = item.get_price()
-            }
-        }
-
-        price
-    }
-
-    pub fn get_item_quality(&mut self, name: String) -> i64 {
-        let mut quality: i64 = 0;
-
-        for item in &mut self.menu {
-            if name == item.get_name() {
-                quality = item.get_quality();
-            }
-        }
-        quality
-    }
-
-    pub fn get_inv(&mut self, name: String) -> i64 {
-        let mut inv: i64 = 0;
-
-        for item in &mut self.menu {
-            if name == item.get_name() {
-                inv = item.get_inv();
-            }
-        }
-        inv
-    }
-
-    pub fn set_inv_quality(&mut self, name: String, new_qual: i64) {
-        for mut item in &mut self.menu {
-            if name == item.get_name() {
-                item.set_quality(new_qual);
-            }
-        }
-    }
 
     pub fn calc_cust_serv(&self) -> i64 {
         let mut tot_rating = 0;
@@ -284,7 +272,7 @@ impl Restaurant {
         tot_rating
     }
 
-    pub fn num_cust_helper(quality: i64) -> i64 {
+    fn num_cust_helper(quality: i64) -> i64 {
         //Poor Quality
         if quality <= 3 {
             return 1;
@@ -300,7 +288,7 @@ impl Restaurant {
         //Highest in all qualities
         25
     }
-    
+
     //Used to calculate the modifier for the amount of customers
     //Uses the total quality to get a range from the helper function
     pub fn num_cust_mod(&mut self) -> i64 {
@@ -331,7 +319,7 @@ impl Restaurant {
         self.customers = new_customers;
         self.customers.len() as i64
     }
-   
+
     //Goes through the list of customers
     //Every customer orders a burger if they have enough money
     //If the customer likes soda or fries they will order one if they have enough money
@@ -414,17 +402,18 @@ impl Restaurant {
         }
     }
 
-    pub fn display_menu(&self) {
+    pub fn display_menu(&mut self) {
         let mut i = 1;
         println!("You'll attract more customers the higher the overall quality of your menu is.");
-        println!("\tItem\tPrice\tQuality");
-        for item in &self.menu {
+        println!("\tItem\tPrice\tQuality\tInventory");
+        for item in &mut self.menu {
             println!(
                 "[{}]\t{}\t${}\t{}",
                 i,
                 item.get_name(),
                 item.get_price(),
-                item.get_quality()
+                item.get_quality(),
+                self.get_inv(item.get_name()),
             );
             i += 1;
         }
@@ -445,3 +434,53 @@ impl Restaurant {
         );
     }
 }
+
+
+#[test]
+fn inc_profit_test() {
+    let mut restaurant_test = Restaurant::new("Test".to_owned());
+    //Revenue before increment should be set to 1000.0 by default
+    restaurant_test.inc_profit( 100.0);
+    assert_eq!(1100, restaurant_test.get_revenue());
+}
+
+#[test]
+fn reduce_profit_test() {
+    let mut restaurant_test = Restaurant::new("Test".to_owned());
+    //Revenue before increment should be set to 1000.0 by default
+    restaurant_test.reduce_profit( 100.0);
+    assert_eq!(900.0, restaurant_test.get_revenue());
+}
+
+#[test]
+fn inc_inv_test() {
+    let mut restaurant_test = Restaurant::new("Test".to_owned());
+    let name = "Burger".to_owned();
+    //Inventory before increment should be set to 100 by default
+    restaurant_test.inc_inv(name, 25);
+    assert_eq!(125, restaurant_test.get_inv(name));
+}
+
+#[test]
+fn reduce_inv_test() {
+    let mut restaurant_test = Restaurant::new("Test".to_owned());
+    let name = "Burger".to_owned();
+    //Inventory before increment should be set to 100 by default
+    restaurant_test.reduce_inv(name, 25);
+    assert_eq!(75, restaurant_test.get_inv(name));
+}
+
+#[test]
+fn calc_day_cost_test() {
+    let mut restaurant_test = Restaurant::new("Test".to_owned());
+    assert_eq!(174.0, restaurant_test.calc_empl_day_cost())
+}
+
+#[test]
+fn gen_customer_test() {
+    let mut restaurant_test = Restaurant::new("Test".to_owned());
+    let num_cust =  MIN_CUST + Restaurant:: num_cust_mod(&mut restaurant_test);
+    let min = cmp::min(restaurant_test.calc_cust_serv(), num_cust);
+    assert_eq!(min, restaurant_test.generate_customers());
+}
+
