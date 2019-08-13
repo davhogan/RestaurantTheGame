@@ -104,7 +104,7 @@ impl UI {
 
     pub fn order_item(&mut self) {
         let mut name: String = "".to_owned();
-
+        self.sim.display_inv();
         println!("Enter the number of the menu item to order : ");
         println!("[1] Burger \n[2] Fries \n[3] Soda");
         let mut item_select: i32 = read!();

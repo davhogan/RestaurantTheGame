@@ -80,6 +80,7 @@ fn inc_inv_test() {
     MenuItem::inc_inv(&mut menu_test, 25);
     assert_eq!(25, emp_test.get_inv());
 }
+
 #[test]
 fn dec_inv_test() {
     let mut menu_test = MenuItem::new("Test".to_owned(), 9.99, 1);

@@ -51,6 +51,7 @@ impl Simulator {
     pub fn get_inv(&mut self, name : String) -> i64{
         self.restaurant.get_inv(name.clone())
     }
+
     pub fn get_name(&mut self) -> String {
         self.restaurant.get_name()
     }
@@ -93,7 +94,7 @@ impl Simulator {
         self.restaurant.fire_emp(fired_emp.get_id());
     }
     
-    //Helper function to calaculate how much it costs 
+    //Helper function to calculate how much it costs
     //for the restaurant to order one item based on the quality
     fn calc_item_price(name: String, quality: i64) -> f64 {
         if name == "Burger".to_owned() {
@@ -153,7 +154,7 @@ impl Simulator {
         println!();
     }
 
-    pub fn display_menu(&self) {
+    pub fn display_menu(&mut self) {
         self.restaurant.display_menu();
         println!();
     }
