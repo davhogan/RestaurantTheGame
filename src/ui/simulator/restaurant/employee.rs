@@ -1,6 +1,7 @@
 use rand::Rng;
 use std::cell::Cell;
-// use std::sync::Mutex;
+mod names;
+use names::{Generator, Name};
 
 const MINWAGE: f64 = 7.25;
 
@@ -32,10 +33,8 @@ impl Employee {
     //Default employee constructor
     pub fn default(posit: i64, id: i64) -> Employee {
         let mut rng = rand::thread_rng();
-
-        let name = "hey".to_owned();
-        // let mut id = rng.gen_range(1, 99999);
-
+        let mut generator = Generator::with_naming(Name::Plain);
+        let name = generator.next().unwrap();
         let age = rng.gen_range(18, 75);
         let rating = 5;
         let mut wage = MINWAGE;
@@ -56,8 +55,8 @@ impl Employee {
     //Generates a random employee
     pub fn rand_empl() -> Employee {
         let mut rng = rand::thread_rng();
-
-        let name = "hey".to_owned();
+        let mut generator = Generator::with_naming(Name::Plain);
+        let name = generator.next().unwrap();
         let mut id = rng.gen_range(1, 99999);
         let age = rng.gen_range(16, 76);
         let rating = rng.gen_range(1, 11);
