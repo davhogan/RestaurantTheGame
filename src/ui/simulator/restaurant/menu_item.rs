@@ -74,8 +74,25 @@ impl MenuItem {
 }
 
 #[test]
-fn inc_inv_test_under_one() {
-    let mut emp_test = Employee::new();
-    Employee::set_rating(&mut emp_test, 0);
-    assert_eq!(1, emp_test.rating);
+fn inc_inv_test() {
+    let mut menu_test = MenuItem::new("Test".to_owned(), 9.99, 1);
+    MenuItem::set_inv(&mut menu_test, 0);
+    MenuItem::inc_inv(&mut menu_test, 25);
+    assert_eq!(25, emp_test.get_inv());
 }
+#[test]
+fn dec_inv_test() {
+    let mut menu_test = MenuItem::new("Test".to_owned(), 9.99, 1);
+    MenuItem::set_inv(&mut menu_test, 25);
+    MenuItem::dec_inv(&mut menu_test, 25);
+    assert_eq!(0, emp_test.get_inv());
+}
+
+#[test]
+fn dec_inv_test_zero() {
+    let mut menu_test = MenuItem::new("Test".to_owned(), 9.99, 1);
+    MenuItem::set_inv(&mut menu_test, 0);
+    MenuItem::dec_inv(&mut menu_test, 25);
+    assert_eq!(0, emp_test.get_inv());
+}
+
