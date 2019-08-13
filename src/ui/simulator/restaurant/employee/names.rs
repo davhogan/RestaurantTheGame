@@ -4,23 +4,6 @@
 //! The name `Generator` implements the `Iterator` trait so it can be used with
 //! adapters, consumers, and in loops.
 //!
-//! # Usage
-//!
-//! This crate is [on crates.io](https://crates.io/crates/names) and can be
-//! used by adding `names` to your dependencies in your project's `Cargo.toml`
-//! file:
-//!
-//! ```toml
-//! [dependencies]
-//! names = "0.9.0"
-//! ```
-//!
-//! and this to your crate root:
-//!
-//! ```
-//! extern crate names;
-//! ```
-//!
 //! # Example: painless defaults
 //!
 //! The easiest way to get started is to use the default `Generator` to return
