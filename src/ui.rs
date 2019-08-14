@@ -7,7 +7,12 @@
 mod simulator;
 use simulator::Simulator;
 
-//Used to interact with the user.
+// Used to interact with the user.
+// Handles taking in most inputs from the user.
+// Has a home_page function to serve as the main hub for the user.
+// Handles the inputs of the user to accomplish the management of the restaurant.
+// Most of the function calls made are to the simulator to update the restaurant.
+
 pub struct UI {
     sim: Simulator,
 }
