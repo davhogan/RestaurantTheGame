@@ -20,7 +20,9 @@ const MAX_CUST: i64 = 25;
 
 // Used to represent a customer.
 // A customer has some amount of cash randomly generated on creation.
-// A customer doesn't have many functions other than managing its data.
+// The main purpose of a customer is to order.
+// The customer will order a burger first if they can afford it, then their cash is reduced by the price of the burger
+// This process is then repeated for Fries then Soda
 #[derive(Clone)]
 struct Customer {
     cash: f64,
@@ -66,9 +68,28 @@ impl Customer {
     pub fn reduce_cash(&mut self, amount: f64) {
         self.cash -= amount;
     }
+
+    // Order the given item from the menu.
+    // Menu item is given by name.
+    // Then it is checked if the customer has enough money to buy the item,
+    // If they do then they will purchase the item and their cash will be reduced by the price.
+    // The restaurant then decreases the inventory for the item and increases profit by the price.
+    pub fn order(&mut self, restaurant : &mut Restaurant, name : String ){
+        let price = restaurant.clone().get_price(name.clone());
+        if self.cash >= price && restaurant.clone().get_inv(name.clone()) > 0 {
+            self.cash -= price;
+            restaurant.reduce_inv(name.clone(), 1);
+            restaurant.inc_revenue(price);
+        }
+    }
 }
 
-//
+// The restaurant does most of the work for this program
+// The restaurant is in charge of creating and managing the list of potential and hired employees.
+// This includes the adding and removal of employees from said lists.
+// As well the restaurant handles the list of customers and menu items.
+// The restaurant can update any menu item's quality and price.
+// The restaurant also simulates serving the customers, for each day.
 
 #[derive(Clone)]
 pub struct Restaurant {
@@ -232,7 +253,9 @@ impl Restaurant {
         self.pot_empls = new_pot_empls;
     }
 
-    //Hire
+    // Hire
+    // Removes the given employee from the potential employees list.
+    // Then gives the employee a new id and adds it to the hired employee list
     pub fn hire_emp(&mut self, mut new_emp: Employee) {
         self.pot_empls.retain(|x| x.get_id() != new_emp.get_id());
         self.id +=1;
@@ -241,17 +264,19 @@ impl Restaurant {
     }
 
     //Fire
+    // Removes the employee whose id matches the given id, from the hired employees list.
     pub fn fire_emp(&mut self, id: i64) {
         self.hired_empls.retain(|x| x.get_id() != id);
     }
 
     //Deduct
-    pub fn reduce_profit(&mut self, cost: f64) {
+    // Reduces the revenue by the given amount
+    pub fn reduce_revenue(&mut self, cost: f64) {
         self.revenue -= cost;
     }
 
-    //Increase
-    pub fn inc_profit(&mut self, profit: f64) {
+    //Increase the revenue by the given amount
+    pub fn inc_revenue(&mut self, profit: f64) {
         self.revenue += profit;
     }
 
@@ -339,29 +364,15 @@ impl Restaurant {
     //If the customer likes soda or fries they will order one if they have enough money
     //No orders will occur if the inventory for the item is zero
     pub fn serve_customers(&mut self) {
-        let burg_price = self.clone().get_price("Burger".to_owned());
-        let fries_price = self.clone().get_price("Fries".to_owned());
-        let soda_price = self.clone().get_price("Soda".to_owned());
+        for mut customer in self.clone().customers {
+            customer.order(self,"Burger".to_owned());
 
-        for customer in self.clone().customers {
-            if customer.get_cash() >= burg_price && self.get_inv("Burger".to_owned()) > 0 {
-                self.reduce_inv("Burger".to_owned(), 1);
-                self.inc_profit(burg_price);
-            }
             if customer.get_likes_fries() {
-                if customer.get_cash() >= fries_price
-                    && self.get_inv("Fries".to_owned()) > 0
-                {
-                    self.reduce_inv("Fries".to_owned(), 1);
-                    self.inc_profit(fries_price);
-                }
+                customer.order(self,"Fries".to_owned());
             }
+
             if customer.get_likes_soda() {
-                if customer.get_cash() >= soda_price && self.get_inv("Soda".to_owned()) > 0
-                {
-                    self.reduce_inv("Soda".to_owned(), 1);
-                    self.inc_profit(soda_price);
-                }
+                customer.order(self,"Soda".to_owned());
             }
         }
     }
