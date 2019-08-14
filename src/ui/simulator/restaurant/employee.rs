@@ -38,11 +38,11 @@ impl Employee {
     //Default employee constructor
     //Used to fill the hired employee list in a Restaurant upon creation of said Restaurant.
     pub fn default(posit: i64, id: i64) -> Employee {
-        let mut rng = rand::thread_rng();
+        let rng = rand::thread_rng();
         let mut generator = Generator::with_naming(Name::Plain);
         let name = generator.next().unwrap();
         let rating = 5;
-        let mut wage = MINWAGE;
+        let wage = MINWAGE;
 
         Employee {
             name,
@@ -86,9 +86,9 @@ impl Employee {
         self.wage
     }
 
-    pub fn get_posit(&self) -> i64 {
-        self.posit
-    }
+  //  pub fn get_posit(&self) -> i64 {
+    //    self.posit
+    //}
 
     //Converts an employee position to a string representation
     pub fn get_posit_string(&self) -> String {

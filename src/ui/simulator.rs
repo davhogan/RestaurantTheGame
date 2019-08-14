@@ -141,7 +141,6 @@ impl Simulator {
                 return 0.50
             }
         }
-       0.0
     }
 
     //Increases inventory of chosen item

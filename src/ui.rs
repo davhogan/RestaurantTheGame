@@ -65,11 +65,7 @@ impl UI {
         self.sim.display_hired();
         UI::home_page(self);
     }
-   
-    pub fn display_pot(&mut self){
-        self.sim.display_pot();
-        UI::home_page(self);
-    }
+
     
     //Used to add an employee from the potential employee list to hired list
     pub fn hire_emp(&mut self) {
@@ -124,13 +120,13 @@ impl UI {
             item_select = read!();
         }
 
-        if (item_select == 1) {
+        if item_select == 1 {
             name = "Burger".to_owned();
         }
-        if (item_select == 2) {
+        if item_select == 2 {
             name = "Fries".to_owned();
         }
-        if (item_select == 3) {
+        if item_select == 3 {
             name = "Soda".to_owned();
         }
         println!("Current {} quality: {} \nCurrent inventory of {}: {}",name.clone(), self.sim.get_item_quality(name.clone()), name.clone(), self.sim.get_inv(name.clone()));
@@ -188,13 +184,13 @@ impl UI {
                 item = read!();
             }
 
-            if (item == 1) {
+            if item == 1 {
                 name = "Burger".to_owned();
             }
-            if (item == 2) {
+            if item == 2 {
                 name = "Fries".to_owned();
             }
-            if (item == 3) {
+            if item == 3 {
                 name = "Soda".to_owned();
             }
 

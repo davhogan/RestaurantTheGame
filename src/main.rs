@@ -13,6 +13,7 @@ use ui::UI;
 //use simulator::Simulator;
 
 fn main() {
+    println!();
 
     let mut choice : String = " ".to_owned();
     

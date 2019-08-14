@@ -24,7 +24,7 @@ const MAX_CUST: i64 = 25;
 // The customer will order a burger first if they can afford it, then their cash is reduced by the price of the burger
 // This process is then repeated for Fries then Soda
 #[derive(Clone)]
-struct Customer {
+pub struct Customer {
     cash: f64,
     likes_fries: bool,
     likes_soda: bool,
@@ -51,22 +51,12 @@ impl Customer {
         }
     }
     //Getters
-    pub fn get_cash(&self) -> f64 {
-        self.cash
-    }
-
     pub fn get_likes_fries(&self) -> bool {
         self.likes_fries
     }
 
     pub fn get_likes_soda(&self) -> bool {
         self.likes_soda
-    }
-
-    //Reduce the amount of cash a customer has by a given amount
-    //Amount will be the price of a menu item that is ordered
-    pub fn reduce_cash(&mut self, amount: f64) {
-        self.cash -= amount;
     }
 
     // Order the given item from the menu.
@@ -146,10 +136,6 @@ impl Restaurant {
         self.revenue
     }
 
-    pub fn get_menu(self) -> Vec<MenuItem> {
-        self.menu
-    }
-
     pub fn get_hired_empls(&mut self) -> Vec<Employee> {
         self.hired_empls.clone()
     }
@@ -158,9 +144,6 @@ impl Restaurant {
         self.pot_empls.clone()
     }
 
-    pub fn get_customers(self) -> Vec<Customer> {
-        self.customers
-    }
 
     pub fn get_hired_empl(&self, position: usize) -> &Employee {
         &self.hired_empls[position]

@@ -46,10 +46,6 @@ impl MenuItem {
     }
 
     //Setters
-    pub fn set_name(&mut self, new_name: String) {
-        self.name = new_name;
-    }
-
     pub fn set_quality(&mut self, new_quality: i64) {
         self.quality = new_quality;
     }
