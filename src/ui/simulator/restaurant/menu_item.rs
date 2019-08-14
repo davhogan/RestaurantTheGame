@@ -3,6 +3,11 @@
 // Please see the file COPYING in the source
 // distribution of this software for license terms.
 
+// The following code is used to represent a menu item at the restaurant.
+// A menu item has a name, price, quality and an inventory.
+// Every menu item has an inventory of 100 upon creation.
+// A menu item doesn't have many functions, it just manages its own data.
+
 use std::borrow::Borrow;
 
 #[derive(Clone)]

@@ -18,6 +18,9 @@ const HOST: i64 = 4;
 const MIN_CUST: i64 = 5;
 const MAX_CUST: i64 = 25;
 
+// Used to represent a customer.
+// A customer has some amount of cash randomly generated on creation.
+// A customer doesn't have many functions other than managing its data.
 #[derive(Clone)]
 struct Customer {
     cash: f64,
@@ -65,6 +68,8 @@ impl Customer {
     }
 }
 
+//
+
 #[derive(Clone)]
 pub struct Restaurant {
     name: String,
@@ -99,7 +104,6 @@ impl Restaurant {
         for _ in 0..10 {
             pot_empls.push(Employee::rand_empl());
         }
-
 
         Restaurant {
             name,
@@ -218,6 +222,8 @@ impl Restaurant {
             }
         }
     }
+
+    //Generates a new list of potential employees
     pub fn generate_pot_empls(&mut self){
         let mut new_pot_empls : Vec<Employee> = Vec::new();
         for _ in 0..10 {
@@ -279,6 +285,7 @@ impl Restaurant {
         tot_rating
     }
 
+    //Takes in the total quality and returns the customer modifier.
     fn num_cust_helper(quality: i64) -> i64 {
         //Poor Quality
         if quality <= 3 {

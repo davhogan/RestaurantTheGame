@@ -3,6 +3,12 @@
 // Please see the file COPYING in the source
 // distribution of this software for license terms.
 
+// The following code is used to represent an employee at the restaurant.
+// An employee has a name, wage, an id, a position and a rating
+// Their wage is based off their rating with a higher rating giving them a higher wage.
+// The wage will never be below the minimum
+// The employee doesn't have much function just manages its own data
+
 use rand::Rng;
 use std::cell::Cell;
 mod names;
@@ -10,13 +16,13 @@ use names::{Generator, Name};
 
 const MINWAGE: f64 = 7.25;
 
+//Positions represented as integers
 const COOK: i64 = 0;
 const SERVER: i64 = 1;
 const WASHER: i64 = 2;
 const BUSSER: i64 = 3;
 const HOST: i64 = 4;
 
-//This is the employee
 #[derive(Clone)]
 pub struct Employee {
     name: String,
@@ -71,6 +77,7 @@ impl Employee {
         }
     }
 
+    //Getters
     pub fn get_name(self) -> String {
         self.name
     }
@@ -83,6 +90,7 @@ impl Employee {
         self.posit
     }
 
+    //Converts an employee position to a string representation
     pub fn get_posit_string(&self) -> String {
         if self.posit == 0 {
             return "Cook".to_owned();
@@ -105,6 +113,7 @@ impl Employee {
         self.rating
     }
 
+    //Only setter needed
     pub fn set_id(&mut self, new_id: i64) {
         self.id = new_id;
     }
