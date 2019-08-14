@@ -218,6 +218,13 @@ impl Restaurant {
             }
         }
     }
+    pub fn generate_pot_empls(&mut self){
+        let mut new_pot_empls : Vec<Employee> = Vec::new();
+        for _ in 0..10 {
+            new_pot_empls.push(Employee::rand_empl());
+        }
+        self.pot_empls = new_pot_empls;
+    }
 
     //Hire
     pub fn hire_emp(&mut self, mut new_emp: Employee) {
@@ -408,12 +415,12 @@ impl Restaurant {
         println!("\tItem\tPrice\tQuality\tInventory");
         for item in &mut self.menu {
             println!(
-                "[{}]\t{}\t${}\t{}",
+                "[{}]\t{}\t{}\t{}\t{}",
                 i,
                 item.get_name(),
                 item.get_price(),
                 item.get_quality(),
-                self.get_inv(item.get_name()),
+                item.get_inv(),
             );
             i += 1;
         }

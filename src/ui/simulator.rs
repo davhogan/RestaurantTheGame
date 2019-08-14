@@ -3,6 +3,12 @@
 // Please see the file COPYING in the source
 // distribution of this software for license terms.
 
+// The following is used as a way to simulate a day.
+// As well as manage the restaurant.
+// The simulator keeps track of how many days have passed and the restaurant.
+// When a new simulator is created the user will be prompted to input a name
+// Currently there is no way to create a new simulator without an input from the user
+
 use rand::Rng;
 mod restaurant;
 use restaurant::Restaurant;
@@ -81,6 +87,9 @@ impl Simulator {
         self.restaurant.set_item_price(name,new_price);
     }
 
+    pub fn update_pot(&mut self){
+        self.restaurant.generate_pot_empls();
+    }
 
     //Hire an employee based on position given in list
     pub fn hire_empl(&mut self, position : usize) {

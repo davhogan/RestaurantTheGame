@@ -3,6 +3,7 @@
 // Please see the file COPYING in the source
 // distribution of this software for license terms.
 
+
 mod simulator;
 use simulator::Simulator;
 
@@ -20,6 +21,9 @@ impl UI {
     //The main display for the user to interact with.
     pub fn home_page(&mut self) {
         let mut choice : i64 = -1;
+        if self.sim.get_day()%7 == 0 {
+            self.sim.update_pot();
+        }
         println!("{}",self.sim.get_name());
         println!("Current Day {}", self.sim.get_day()+1);
         println!("Current Revenue : ${}", self.sim.get_revenue());
