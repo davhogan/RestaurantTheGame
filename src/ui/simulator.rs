@@ -40,7 +40,7 @@ impl Simulator {
     
         let cust_served = self.restaurant.generate_customers();                  
         self.restaurant.serve_customers();
-        self.restaurant.reduce_profit(self.restaurant.calc_empl_day_cost());
+        self.restaurant.reduce_revenue(self.restaurant.calc_empl_day_cost());
 
         println!("Customers servered : {}", cust_served);
         println!("Burgers Sold: {}", burg_inv - self.restaurant.get_inv("Burger".to_owned()));
@@ -87,6 +87,7 @@ impl Simulator {
         self.restaurant.set_item_price(name,new_price);
     }
 
+    // New list of potential employees
     pub fn update_pot(&mut self){
         self.restaurant.generate_pot_empls();
     }
@@ -148,7 +149,7 @@ impl Simulator {
     pub fn order_inv(&mut self, name : String, inc_amount : i64) {
         let quality = self.restaurant.get_item_quality(name.clone());
         let item_price = Simulator::calc_item_price(name.clone(),quality);
-        self.restaurant.reduce_profit(inc_amount as f64 * item_price);
+        self.restaurant.reduce_revenue(inc_amount as f64 * item_price);
         self.restaurant.inc_inv(name.clone(),inc_amount)
     }
 

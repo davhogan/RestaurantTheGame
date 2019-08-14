@@ -21,7 +21,7 @@ fn main() {
     println!("You will be in charge of managing a restaurant.");
     println!("This includes hiring and firing employees, ordering more inventory,");
     println!("and changing the price and quality of the food on the menu.");
-    println!("Press q to quit or enter to launch game");
+    println!("Enter q to quit or enter any key to launch game");
     
     choice = read!();
     if choice == "q".to_owned() {
