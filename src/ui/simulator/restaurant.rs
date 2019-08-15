@@ -144,7 +144,6 @@ impl Restaurant {
         self.pot_empls.clone()
     }
 
-
     pub fn get_hired_empl(&self, position: usize) -> &Employee {
         &self.hired_empls[position]
     }

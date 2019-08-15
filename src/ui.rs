@@ -22,21 +22,34 @@ impl UI {
         let sim = Simulator::new();
         UI { sim }
     }
-    
+    pub fn parser(input : String) -> i64{
+
+        for a_char in input.chars() {
+          if ! a_char.is_digit(10){
+              return -1
+          }
+          else{
+            return a_char.to_digit(10).unwrap() as i64
+          }
+        }
+        -1
+    }
     //The main display for the user to interact with.
     pub fn home_page(&mut self) {
         let mut choice : i64 = -1;
+        let mut input : String = "".to_owned();
         if self.sim.get_day()%7 == 0 {
             self.sim.update_pot();
         }
         println!("{}",self.sim.get_name());
         println!("Current Day {}", self.sim.get_day()+1);
         println!("Current Revenue : ${}", self.sim.get_revenue());
-        
+
         while choice < 1 || choice > 7 {
             println!("[1] Display Menu\n[2] Display Employees\n[3] Hire Employee\n[4] Fire Employee");
             println!("[5] Order Menu Item\n[6] Change Menu Item Price\n[7] Go To Next Day\n[8] Quit Program");
-            choice = read!();
+            input = read!();
+            choice = UI::parser(input);
             
             if choice == 8{
                 return;
@@ -69,14 +82,15 @@ impl UI {
     
     //Used to add an employee from the potential employee list to hired list
     pub fn hire_emp(&mut self) {
-        
+        let mut input : String = "".to_owned();
         let mut emp_select : i64 = -1;
         //Display potential employees and let user choose an employee to hire
         while emp_select < 1 || emp_select > self.sim.pot_len() {
            self.sim.display_pot();
             println!("Enter 0 to return to home page");
             println!("Choose employee to hire : ");
-            emp_select = read!();
+            input = read!();
+            emp_select = UI::parser(input);
             if emp_select == 0 {
                 UI::home_page(self);
             }
@@ -90,12 +104,14 @@ impl UI {
     //Used to remove an employee from the hired list
     pub fn fire_emp(&mut self) {
         let mut emp_select : i64 = -1;
+        let mut input : String = "".to_owned();
         //Display hired employees and let user choose one to fire
         while emp_select < 1 || emp_select > self.sim.hired_len() {
            self.sim.display_hired();
             println!("Enter 0 to return to home page");
            println!("Choose employee to fire : ");
-            emp_select = read!();
+            input = read!();
+            emp_select = UI::parser(input);
             if emp_select == 0 {
                 UI::home_page( self);
             }
@@ -109,6 +125,7 @@ impl UI {
 
     pub fn order_item(&mut self) {
         let mut name: String = "".to_owned();
+        let mut input : String = "".to_owned();
         self.sim.display_inv();
         println!("Enter the number of the menu item to order : ");
         println!("[1] Burger \n[2] Fries \n[3] Soda");
@@ -117,7 +134,8 @@ impl UI {
         while item_select < 1 || item_select > 3 {
             println!("Enter the number of the menu item to order: ");
             println!("[1] Burger \n[2] Fries \n[3] Soda");
-            item_select = read!();
+            input = read!();
+            item_select = UI::parser(input) as i32;
         }
 
         if item_select == 1 {
@@ -142,7 +160,8 @@ impl UI {
         }
 
         println!("Enter amount of {} to order", name.clone());
-        let inc_amount: i64 = read!();
+        input = read!();
+        let inc_amount = UI::parser(input);
 
         self.sim.order_inv(name.clone(), inc_amount);
         println!("Current {} quality: {}
@@ -154,11 +173,13 @@ impl UI {
     pub fn change_item_quality(&mut self) {
             let mut new_quality: i64 = -1;
             let mut name : String = "".to_owned();
+            let mut input : String = "".to_owned();
             //Get new quality (Must be 
             while new_quality < 1 || new_quality > 3 {
                 println!("Select quality ");
                 println!("[1] Low\n[2] Medium\n[3] High");
-                new_quality = read!();
+                input = read!();
+                new_quality = UI::parser(input);
             }
 
             if (new_quality == 1) {
@@ -178,10 +199,12 @@ impl UI {
     pub fn change_item_price(&mut self) {
             let mut item: i64 = -1;
             let mut name: String = " ".to_owned();
+            let mut input : String = "".to_owned();
            //Get an item
             while item < 1 || item > 3 {
                 println!("Select Menu Item to change ");
-                item = read!();
+                input = read!();
+                item = UI::parser(input);
             }
 
             if item == 1 {
